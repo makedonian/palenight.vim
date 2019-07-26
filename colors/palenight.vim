@@ -70,13 +70,36 @@ endfunction
 " }}}
 
 " Color Variables {{{
+let s:overrides = get(g:, "palenight_color_overrides", {})
 
-let s:colors = palenight#GetColors()
+let s:colors = {
+      \ "red": get(s:overrides, "red", { "gui": "#ff5370", "cterm": "204", "cterm16": "1" }),
+      \ "light_red": get(s:overrides, "light_red", { "gui": "#ff869a", "cterm": "204", "cterm16": "1" }),
+      \ "dark_red": get(s:overrides, "dark_red", { "gui": "#BE5046", "cterm": "196", "cterm16": "9" }),
+      \ "green": get(s:overrides, "green", { "gui": "#C3E88D", "cterm": "114", "cterm16": "2" }),
+      \ "bright_green": get(s:overrides, "bright_green", { "gui": "#10ac1c", "cterm": "114", "cterm16": "2" }),
+      \ "yellow": get(s:overrides, "yellow", { "gui": "#ffcb6b", "cterm": "180", "cterm16": "3" }),
+      \ "dark_yellow": get(s:overrides, "dark_yellow", { "gui": "#F78C6C", "cterm": "173", "cterm16": "11" }),
+      \ "blue": get(s:overrides, "blue", { "gui": "#82b1ff", "cterm": "39", "cterm16": "4" }),
+      \ "purple": get(s:overrides, "purple", { "gui": "#c792ea", "cterm": "170", "cterm16": "5" }),
+      \ "cyan": get(s:overrides, "cyan", { "gui": "#89DDFF", "cterm": "38", "cterm16": "6" }),
+      \ "white": get(s:overrides, "white", { "gui": "#bfc7d5", "cterm": "145", "cterm16": "7" }),
+      \ "black": get(s:overrides, "black", { "gui": "#292D3E", "cterm": "235", "cterm16": "0" }),
+      \ "visual_black": get(s:overrides, "visual_black", { "gui": "NONE", "cterm": "NONE", "cterm16": "0" }),
+      \ "comment_grey": get(s:overrides, "comment_grey", { "gui": "#697098", "cterm": "59", "cterm16": "15" }),
+      \ "gutter_fg_grey": get(s:overrides, "gutter_fg_grey", { "gui": "#4B5263", "cterm": "238", "cterm16": "15" }),
+      \ "cursor_grey": get(s:overrides, "cursor_grey", { "gui": "#2C323C", "cterm": "236", "cterm16": "8" }),
+      \ "visual_grey": get(s:overrides, "visual_grey", { "gui": "#3E4452", "cterm": "237", "cterm16": "15" }),
+      \ "menu_grey": get(s:overrides, "menu_grey", { "gui": "#3E4452", "cterm": "237", "cterm16": "8" }),
+      \ "special_grey": get(s:overrides, "special_grey", { "gui": "#3B4048", "cterm": "238", "cterm16": "15" }),
+      \ "vertsplit": get(s:overrides, "vertsplit", { "gui": "#181A1F", "cterm": "59", "cterm16": "15" }),
+      \}
 
 let s:red = s:colors.red
 let s:light_red = s:colors.light_red
 let s:dark_red = s:colors.dark_red
 let s:green = s:colors.green
+let s:bright_green = s:colors.bright_green
 let s:yellow = s:colors.yellow
 let s:dark_yellow = s:colors.dark_yellow
 let s:blue = s:colors.blue
@@ -131,7 +154,7 @@ call s:h("Debug", {}) " debugging statements
 call s:h("Underlined", { "gui": "underline", "cterm": "underline" }) " text that stands out, HTML links
 call s:h("Ignore", {}) " left blank, hidden
 call s:h("Error", { "fg": s:red }) " any erroneous construct
-call s:h("Todo", { "fg": s:purple }) " anything that needs extra attention; mostly the keywords TODO FIXME and XXX
+call s:h("Todo", { "fg": s:red }) " anything that needs extra attention; mostly the keywords TODO FIXME and XXX
 
 " }}}
 
@@ -144,7 +167,7 @@ call s:h("CursorIM", {}) " like Cursor, but used when in IME mode
 call s:h("CursorColumn", { "bg": s:cursor_grey }) " the screen column that the cursor is in when 'cursorcolumn' is set
 call s:h("CursorLine", { "bg": s:cursor_grey }) " the screen line that the cursor is in when 'cursorline' is set
 call s:h("Directory", { "fg": s:blue }) " directory names (and other special names in listings)
-call s:h("DiffAdd", { "bg": s:green, "fg": s:black }) " diff mode: Added line
+call s:h("DiffAdd", { "bg": s:yellow, "fg": s:black }) " diff mode: Added line
 call s:h("DiffChange", { "bg": s:yellow, "fg": s:black }) " diff mode: Changed line
 call s:h("DiffDelete", { "bg": s:red, "fg": s:black }) " diff mode: Deleted line
 call s:h("DiffText", { "bg": s:black, "fg": s:yellow }) " diff mode: Changed text within a changed line
@@ -436,10 +459,10 @@ call s:h("phpClasses", { "fg": s:yellow })
 call s:h("phpFunction", { "fg": s:blue })
 call s:h("phpType", { "fg": s:purple })
 call s:h("phpKeyword", { "fg": s:purple })
-call s:h("phpVarSelector", { "fg": s:white })
+call s:h("phpVarSelector", { "fg": s:white, "gui": "bold" })
 call s:h("phpIdentifier", { "fg": s:white })
 call s:h("phpMethod", { "fg": s:blue })
-call s:h("phpBoolean", { "fg": s:blue })
+call s:h("phpBoolean", { "fg": s:dark_yellow })
 call s:h("phpParent", { "fg": s:white })
 call s:h("phpOperator", { "fg": s:purple })
 call s:h("phpRegion", { "fg": s:purple })
@@ -468,8 +491,14 @@ call s:h("NeomakeErrorSign", { "fg": s:red })
 call s:h("NeomakeInfoSign", { "fg": s:blue })
 
 " tpope/vim-fugitive
-call s:h("diffAdded", { "fg": s:green })
+call s:h("diffAdded", { "fg": s:bright_green})
 call s:h("diffRemoved", { "fg": s:red })
+
+" coc-vim
+call s:h("CocHintVirtualText", { "fg": s:cyan, "bg": s:visual_grey })
+call s:h("CocInfoVirtualText", { "fg": s:dark_yellow, "bg": s:visual_grey })
+call s:h("CocErrorVirtualText", { "fg": s:red, "bg": s:white })
+call s:h("CocWarningVirtualText", { "fg": s:dark_red, "bg": s:visual_grey})
 
 " }}}
 
