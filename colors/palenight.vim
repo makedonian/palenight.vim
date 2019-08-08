@@ -86,6 +86,7 @@ let s:colors = {
       \ "white": get(s:overrides, "white", { "gui": "#bfc7d5", "cterm": "145", "cterm16": "7" }),
       \ "black": get(s:overrides, "black", { "gui": "#292D3E", "cterm": "235", "cterm16": "0" }),
       \ "visual_black": get(s:overrides, "visual_black", { "gui": "NONE", "cterm": "NONE", "cterm16": "0" }),
+      \ "virtual_bg": get(s:overrides, "virtual_bg", { "gui": "#575773", "cterm": "NONE", "cterm16": "0" }),
       \ "comment_grey": get(s:overrides, "comment_grey", { "gui": "#697098", "cterm": "59", "cterm16": "15" }),
       \ "gutter_fg_grey": get(s:overrides, "gutter_fg_grey", { "gui": "#4B5263", "cterm": "238", "cterm16": "15" }),
       \ "cursor_grey": get(s:overrides, "cursor_grey", { "gui": "#2C323C", "cterm": "236", "cterm16": "8" }),
@@ -107,6 +108,7 @@ let s:purple = s:colors.purple
 let s:cyan = s:colors.cyan
 let s:white = s:colors.white
 let s:black = s:colors.black
+let s:virtual_bg = s:colors.virtual_bg
 let s:visual_black = s:colors.visual_black " Black out selected text in 16-color visual mode
 let s:comment_grey = s:colors.comment_grey
 let s:gutter_fg_grey = s:colors.gutter_fg_grey
@@ -167,10 +169,10 @@ call s:h("CursorIM", {}) " like Cursor, but used when in IME mode
 call s:h("CursorColumn", { "bg": s:cursor_grey }) " the screen column that the cursor is in when 'cursorcolumn' is set
 call s:h("CursorLine", { "bg": s:cursor_grey }) " the screen line that the cursor is in when 'cursorline' is set
 call s:h("Directory", { "fg": s:blue }) " directory names (and other special names in listings)
-call s:h("DiffAdd", { "bg": s:yellow, "fg": s:black }) " diff mode: Added line
-call s:h("DiffChange", { "bg": s:yellow, "fg": s:black }) " diff mode: Changed line
-call s:h("DiffDelete", { "bg": s:red, "fg": s:black }) " diff mode: Deleted line
-call s:h("DiffText", { "bg": s:black, "fg": s:yellow }) " diff mode: Changed text within a changed line
+call s:h("DiffAdd", { "fg": s:green}) " diff mode: Added line
+call s:h("DiffChange", { "fg": s:yellow }) " diff mode: Changed line
+call s:h("DiffDelete", { "fg": s:red }) " diff mode: Deleted line
+call s:h("DiffText", { "bg": s:yellow }) " diff mode: Changed text within a changed line
 call s:h("ErrorMsg", { "fg": s:red }) " error messages on the command line
 call s:h("VertSplit", { "fg": s:vertsplit }) " the column separating vertically split windows
 call s:h("Folded", { "fg": s:comment_grey }) " line used for closed folds
@@ -459,8 +461,8 @@ call s:h("phpClasses", { "fg": s:yellow })
 call s:h("phpFunction", { "fg": s:blue })
 call s:h("phpType", { "fg": s:purple })
 call s:h("phpKeyword", { "fg": s:purple })
-call s:h("phpVarSelector", { "fg": s:white, "gui": "bold" })
-call s:h("phpIdentifier", { "fg": s:white })
+call s:h("phpVarSelector", { "fg": s:dark_yellow, "gui": "bold" })
+call s:h("phpIdentifier", { "fg": s:white, "gui": "bold" })
 call s:h("phpMethod", { "fg": s:blue })
 call s:h("phpBoolean", { "fg": s:dark_yellow })
 call s:h("phpParent", { "fg": s:white })
@@ -527,6 +529,12 @@ hi link gitcommitSelectedArrow gitcommitSelectedFile
 hi link gitcommitUnmergedArrow gitcommitUnmergedFile
 
 " }}}
+
+
+call s:h("CocErrorVirtualText", { "fg": s:white, "bg": s:red})
+call s:h("CocInfoVirtualText", { "fg": s:black, "bg": s:blue})
+call s:h("CocWarningVirtualText", { "fg": s:black, "bg": s:dark_yellow})
+call s:h("CocHintVirtualText", { "fg": s:white, "bg": s:virtual_bg })
 
 " Setup Terminal Colors {{{
 
